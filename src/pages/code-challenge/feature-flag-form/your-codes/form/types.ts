@@ -16,8 +16,10 @@ interface FieldShape<TValue = unknown> {
   moveValue: (fromIndex: number, toIndex: number) => void
 }
 
-// Hand-rolled facade because tanstack-form's deep field-path inference
-// can't model the recursive Group schema. Zod still validates at runtime.
+/*
+ * Build a facade because tanstack-form's deep field-path inference
+ * can't model the recursive Group schema. Zod still validates at runtime properly.
+ */
 export interface FlagFormApi {
   Field: React.FC<{
     name: string

@@ -4,7 +4,7 @@ import { SectionCard } from '../shared/section-card'
 
 export const DefaultRuleSection = () => {
   const variationKeys = useFormValues((v) =>
-    v.variations.map((x) => x.key).filter(Boolean),
+    Array.from(new Set(v.variations.map((x) => x.key).filter(Boolean))),
   )
 
   return (

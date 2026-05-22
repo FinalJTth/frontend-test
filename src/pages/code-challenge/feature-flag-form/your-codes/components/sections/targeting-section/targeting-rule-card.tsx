@@ -20,7 +20,7 @@ interface TargetingRuleCardProps {
 
 export const TargetingRuleCard = ({ index, onRemove, dragHandle }: TargetingRuleCardProps) => {
   const variationKeys = useFormValues((v) =>
-    v.variations.map((x) => x.key).filter(Boolean),
+    Array.from(new Set(v.variations.map((x) => x.key).filter(Boolean))),
   )
   const previewQuery = useFormValues((v) =>
     stringifyCondition(v.targeting[index].condition),

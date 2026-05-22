@@ -12,28 +12,25 @@ import { VariationRow } from './variation-row'
 
 export const VariationsSection = () => {
   const form = useFormContext()
+
+  // Read+write the variations array imperatively when the button is clicked
+  // so this button doesn't need its own subscription to the array. The list
+  // below already subscribes via the `form.Field` for rendering.
+  const onAddVariation = () => {
+    const current = form.getFieldValue('variations') as Variation[]
+    const next = createBooleanVariation(nextVariationKey(current), false)
+    form.setFieldValue('variations', [...current, next])
+  }
+
   return (
     <SectionCard
       step={2}
       title="Variations"
       description="กำหนดค่าที่ Flag จะ return (key → value)"
       action={
-        <form.Field name="variations" mode="array">
-          {(field) => (
-            <Button
-              type="button"
-              size="sm"
-              variant="outline"
-              onClick={() =>
-                field.pushValue(
-                  createBooleanVariation(nextVariationKey(field.state.value as Variation[]), false),
-                )
-              }
-            >
-              <Plus className="size-4" /> เพิ่ม Variation
-            </Button>
-          )}
-        </form.Field>
+        <Button type="button" size="sm" variant="outline" onClick={onAddVariation}>
+          <Plus className="size-4" /> เพิ่ม Variation
+        </Button>
       }
     >
       <form.Field name="variations" mode="array">
