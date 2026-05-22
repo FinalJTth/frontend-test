@@ -39,7 +39,11 @@ export const SelectField = <T extends string = string>({
             </Label>
           )}
           <Select
-            value={(field.state.value as T) || undefined}
+            /*
+             * Always pass a defined string so Radix stays in controlled mode.
+             * Effectively avoid `uncontrolled -> controlled` warning.
+             */
+            value={(field.state.value as T | undefined) ?? ('' as T)}
             disabled={options.length === 0}
             onValueChange={(v) => {
               field.handleChange(v as T)
